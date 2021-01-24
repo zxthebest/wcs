@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.adplatform.mapper.AdCurrentMapper" >
+  <resultMap id="BaseResultMap" type="com.adplatform.model.AdCurrent" >
+    <id column="ADC_ADID" property="adcAdid" jdbcType="VARCHAR" />
+    <result column="ADC_ADScheme_ID" property="adcAdschemeId" jdbcType="VARCHAR" />
+    <result column="ADC_OrgId" property="adcOrgid" jdbcType="VARCHAR" />
+    <result column="ADC_Type" property="adcType" jdbcType="INTEGER" />
+    <result column="ADC_UpdateTime" property="adcUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="ADC_StartTime" property="adcStarttime" jdbcType="DATE" />
+    <result column="ADC_EndTime" property="adcEndtime" jdbcType="DATE" />
+    <result column="ADC_ADSF_ID" property="adcAdsfId" jdbcType="VARCHAR" />
+    <result column="ADC_PicUrl" property="adcPicurl" jdbcType="VARCHAR" />
+    <result column="ADC_ADScheme_Index" property="adcAdschemeIndex" jdbcType="INTEGER" />
+    <result column="ADC_Index" property="adcIndex" jdbcType="INTEGER" />
+    <result column="ADC_HotUrl" property="adcHoturl" jdbcType="VARCHAR" />
+    <result column="ADC_VideoUrl" property="adcVideourl" jdbcType="VARCHAR" />
+    <result column="ADC_VideoFlag" property="adcVideoflag" jdbcType="INTEGER" />
+    <result column="ADC_DEL" property="adcDel" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ADC_ADID, ADC_ADScheme_ID, ADC_OrgId, ADC_Type, ADC_UpdateTime, ADC_StartTime, ADC_EndTime, 
+    ADC_ADSF_ID, ADC_PicUrl, ADC_ADScheme_Index, ADC_Index, ADC_HotUrl, ADC_VideoUrl, 
+    ADC_VideoFlag, ADC_DEL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ad_current
+    where ADC_ADID = #{adcAdid,jdbcType=VARCHAR}
+  </select>
+  	<!-- 根据ADSchemeCommand 查找AdCurrent -->
+	<select id="selectByADSchemeCommand" resultMap="BaseResultMap"
+		parameterType="com.adplatform.command.ADSchemeCommand">
+		select
+		<include refid="Base_Column_List" />
+		from ad_current
+		where ADC_ADScheme_ID = #{adSchemeId,jdbcType=VARCHAR}
+		and	ADC_Type = #{adType,jdbcType=INTEGER}
+		and ADC_Index= #{index,jdbcType=INTEGER}
+	</select>
+	<!--  根据广告方案id和广告类型查询广告	 -->
+  <select id="selectByAdSchemeIdAndAdType" resultMap="BaseResultMap" parameterType="com.adplatform.command.ADSchemeCommand" >
+    select 
+    <include refid="Base_Column_List" />
+    from ad_current
+    where ADC_ADScheme_ID = #{adSchemeId,jdbcType=VARCHAR}
+    and ADC_Type=#{adType,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ad_current
+    where ADC_ADID = #{adcAdid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adplatform.model.AdCurrent" >
+    insert into ad_current (ADC_ADID, ADC_ADScheme_ID, ADC_OrgId, 
+      ADC_Type, ADC_UpdateTime, ADC_StartTime, 
+      ADC_EndTime, ADC_ADSF_ID, ADC_PicUrl, 
+      ADC_ADScheme_Index, ADC_Index, ADC_HotUrl, 
+      ADC_VideoUrl, ADC_VideoFlag, ADC_DEL
+      )
+    values (#{adcAdid,jdbcType=VARCHAR}, #{adcAdschemeId,jdbcType=VARCHAR}, #{adcOrgid,jdbcType=VARCHAR}, 
+      #{adcType,jdbcType=INTEGER}, #{adcUpdatetime,jdbcType=TIMESTAMP}, #{adcStarttime,jdbcType=DATE}, 
+      #{adcEndtime,jdbcType=DATE}, #{adcAdsfId,jdbcType=VARCHAR}, #{adcPicurl,jdbcType=VARCHAR}, 
+      #{adcAdschemeIndex,jdbcType=INTEGER}, #{adcIndex,jdbcType=INTEGER}, #{adcHoturl,jdbcType=VARCHAR}, 
+      #{adcVideourl,jdbcType=VARCHAR}, #{adcVideoflag,jdbcType=INTEGER}, #{adcDel,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adplatform.model.AdCurrent" >
+    insert into ad_current
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adcAdid != null" >
+        ADC_ADID,
+      </if>
+      <if test="adcAdschemeId != null" >
+        ADC_ADScheme_ID,
+      </if>
+      <if test="adcOrgid != null" >
+        ADC_OrgId,
+      </if>
+      <if test="adcType != null" >
+        ADC_Type,
+      </if>
+      <if test="adcUpdatetime != null" >
+        ADC_UpdateTime,
+      </if>
+      <if test="adcStarttime != null" >
+        ADC_StartTime,
+      </if>
+      <if test="adcEndtime != null" >
+        ADC_EndTime,
+      </if>
+      <if test="adcAdsfId != null" >
+        ADC_ADSF_ID,
+      </if>
+      <if test="adcPicurl != null" >
+        ADC_PicUrl,
+      </if>
+      <if test="adcAdschemeIndex != null" >
+        ADC_ADScheme_Index,
+      </if>
+      <if test="adcIndex != null" >
+        ADC_Index,
+      </if>
+      <if test="adcHoturl != null" >
+        ADC_HotUrl,
+      </if>
+      <if test="adcVideourl != null" >
+        ADC_VideoUrl,
+      </if>
+      <if test="adcVideoflag != null" >
+        ADC_VideoFlag,
+      </if>
+      <if test="adcDel != null" >
+        ADC_DEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adcAdid != null" >
+        #{adcAdid,jdbcType=VARCHAR},
+      </if>
+      <if test="adcAdschemeId != null" >
+        #{adcAdschemeId,jdbcType=VARCHAR},
+      </if>
+      <if test="adcOrgid != null" >
+        #{adcOrgid,jdbcType=VARCHAR},
+      </if>
+      <if test="adcType != null" >
+        #{adcType,jdbcType=INTEGER},
+      </if>
+      <if test="adcUpdatetime != null" >
+        #{adcUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adcStarttime != null" >
+        #{adcStarttime,jdbcType=DATE},
+      </if>
+      <if test="adcEndtime != null" >
+        #{adcEndtime,jdbcType=DATE},
+      </if>
+      <if test="adcAdsfId != null" >
+        #{adcAdsfId,jdbcType=VARCHAR},
+      </if>
+      <if test="adcPicurl != null" >
+        #{adcPicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="adcAdschemeIndex != null" >
+        #{adcAdschemeIndex,jdbcType=INTEGER},
+      </if>
+      <if test="adcIndex != null" >
+        #{adcIndex,jdbcType=INTEGER},
+      </if>
+      <if test="adcHoturl != null" >
+        #{adcHoturl,jdbcType=VARCHAR},
+      </if>
+      <if test="adcVideourl != null" >
+        #{adcVideourl,jdbcType=VARCHAR},
+      </if>
+      <if test="adcVideoflag != null" >
+        #{adcVideoflag,jdbcType=INTEGER},
+      </if>
+      <if test="adcDel != null" >
+        #{adcDel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adplatform.model.AdCurrent" >
+    update ad_current
+    <set >
+      <if test="adcAdschemeId != null" >
+        ADC_ADScheme_ID = #{adcAdschemeId,jdbcType=VARCHAR},
+      </if>
+      <if test="adcOrgid != null" >
+        ADC_OrgId = #{adcOrgid,jdbcType=VARCHAR},
+      </if>
+      <if test="adcType != null" >
+        ADC_Type = #{adcType,jdbcType=INTEGER},
+      </if>
+      <if test="adcUpdatetime != null" >
+        ADC_UpdateTime = #{adcUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adcStarttime != null" >
+        ADC_StartTime = #{adcStarttime,jdbcType=DATE},
+      </if>
+      <if test="adcEndtime != null" >
+        ADC_EndTime = #{adcEndtime,jdbcType=DATE},
+      </if>
+      <if test="adcAdsfId != null" >
+        ADC_ADSF_ID = #{adcAdsfId,jdbcType=VARCHAR},
+      </if>
+      <if test="adcPicurl != null" >
+        ADC_PicUrl = #{adcPicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="adcAdschemeIndex != null" >
+        ADC_ADScheme_Index = #{adcAdschemeIndex,jdbcType=INTEGER},
+      </if>
+      <if test="adcIndex != null" >
+        ADC_Index = #{adcIndex,jdbcType=INTEGER},
+      </if>
+      <if test="adcHoturl != null" >
+        ADC_HotUrl = #{adcHoturl,jdbcType=VARCHAR},
+      </if>
+      <if test="adcVideourl != null" >
+        ADC_VideoUrl = #{adcVideourl,jdbcType=VARCHAR},
+      </if>
+      <if test="adcVideoflag != null" >
+        ADC_VideoFlag = #{adcVideoflag,jdbcType=INTEGER},
+      </if>
+      <if test="adcDel != null" >
+        ADC_DEL = #{adcDel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ADC_ADID = #{adcAdid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adplatform.model.AdCurrent" >
+    update ad_current
+    set ADC_ADScheme_ID = #{adcAdschemeId,jdbcType=VARCHAR},
+      ADC_OrgId = #{adcOrgid,jdbcType=VARCHAR},
+      ADC_Type = #{adcType,jdbcType=INTEGER},
+      ADC_UpdateTime = #{adcUpdatetime,jdbcType=TIMESTAMP},
+      ADC_StartTime = #{adcStarttime,jdbcType=DATE},
+      ADC_EndTime = #{adcEndtime,jdbcType=DATE},
+      ADC_ADSF_ID = #{adcAdsfId,jdbcType=VARCHAR},
+      ADC_PicUrl = #{adcPicurl,jdbcType=VARCHAR},
+      ADC_ADScheme_Index = #{adcAdschemeIndex,jdbcType=INTEGER},
+      ADC_Index = #{adcIndex,jdbcType=INTEGER},
+      ADC_HotUrl = #{adcHoturl,jdbcType=VARCHAR},
+      ADC_VideoUrl = #{adcVideourl,jdbcType=VARCHAR},
+      ADC_VideoFlag = #{adcVideoflag,jdbcType=INTEGER},
+      ADC_DEL = #{adcDel,jdbcType=INTEGER}
+    where ADC_ADID = #{adcAdid,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <!-- 修改current屏保1号位的videoFlag为0 -->
+  <update id="setVideoFlagToZ" parameterType="com.adplatform.model.AdTemp" >
+    update ad_current
+    set 
+      ADC_VideoUrl = "",
+      ADC_VideoFlag = 0
+    where ADC_ADScheme_ID = #{adtAdschemeId,jdbcType=VARCHAR} 
+     AND ADC_Type = 2
+     AND ADC_Index = 1
+  </update>
+  
+  <!-- 修改temp屏保1号位的videoFlag为0 -->
+  <update id="setVideoFlagToO" parameterType="com.adplatform.model.AdTemp" >
+    update ad_current
+    set 
+      ADC_PicUrl = ""
+    where ADC_ADScheme_ID = #{adtAdschemeId,jdbcType=VARCHAR} 
+     AND ADC_Type = 2
+  </update>
+  
+  <!-- 根据广告方案id、组织id、广告类型、广告Index插入广告 -->
+  <insert id="insertAdCurrentBySGTI">
+  	<foreach collection="list" item="item" index="index" separator=";">
+		insert into ad_current (
+			ADC_ADID, 
+			ADC_ADScheme_ID, 
+			ADC_OrgId, 
+      		ADC_Type, 
+      		ADC_StartTime, 
+      		ADC_EndTime, 
+      		ADC_UpdateTime, 
+      		ADC_ADSF_ID,
+      		ADC_ADScheme_Index, 
+      		ADC_Index, 
+      		ADC_HotUrl, 
+      		ADC_VideoUrl,
+      		ADC_VideoFlag)
+    	values (
+    		#{item.adcAdid}, 
+    		#{item.adcAdschemeId}, 
+    		#{item.adcOrgid}, 
+      		#{item.adcType}, 
+      		#{item.adcStarttime}, 
+      		#{item.adcEndtime}, 
+      		#{item.adcUpdatetime}, 
+      		#{item.adcAdsfId}, 
+      		#{item.adcAdschemeIndex},
+      		#{item.adcIndex}, 
+      		#{item.adcHoturl}, 
+      		#{item.adcVideourl},
+      		#{item.adcVideoflag})
+		ON DUPLICATE KEY UPDATE
+      		ADC_StartTime = #{item.adcStarttime},
+      		ADC_EndTime = #{item.adcEndtime},
+      		ADC_UpdateTime = #{item.adcUpdatetime},
+      		ADC_ADSF_ID = #{item.adcAdsfId},
+      		ADC_HotUrl = #{item.adcHoturl},
+      		ADC_VideoFlag = #{item.adcVideoflag},
+      		ADC_VideoUrl = #{item.adcVideourl}
+	  </foreach>
+  </insert>
+  
+  
+  <select id="selectMergeAdcByGST" resultMap="BaseResultMap" parameterType="com.adplatform.model.AdCurrent" >
+  	SELECT 
+      ADC_ADID, ADC_ADScheme_ID, ADC_OrgId, ADC_Type, ADC_UpdateTime, ADC_StartTime, ADC_EndTime, 
+      ADC_ADSF_ID, ADSF_Url as ADC_PicUrl, ADC_ADScheme_Index, ADC_Index, ADC_HotUrl, ADC_VideoUrl,
+      ADC_VideoFlag, ADC_DEL
+    FROM (
+	  SELECT * from ad_current
+		WHERE ADC_Type=#{adcType,jdbcType=INTEGER} AND
+      	ADC_ADScheme_Index = #{adcAdschemeIndex,jdbcType=INTEGER} AND
+      	ADC_OrgId=#{adcOrgid,jdbcType=VARCHAR} AND
+      	ADC_ADScheme_ID=#{adcAdschemeId,jdbcType=VARCHAR} AND
+      	STRCMP(ADC_EndTime, CURDATE()) &gt;= 0 AND 
+      	STRCMP(ADC_StartTime, CURDATE()) &lt;= 0
+      	) a
+	LEFT JOIN
+	  ad_scheme_file asf
+	ON 
+ 	  a.ADC_ADSF_ID = asf.ADSF_ID
+ 	ORDER BY ADC_Index
+  	<!-- SELECT 
+      ADC_ADID, ADC_ADScheme_ID, ADC_OrgId, ADC_Type, ADC_UpdateTime, ADC_StartTime, ADC_EndTime, 
+      ADC_ADSF_ID, ADSF_Url as ADC_PicUrl, ADC_ADScheme_Index, ADC_Index, ADC_HotUrl, ADSF_Url as ADC_VideoUrl, 
+      ADC_VideoFlag, ADC_DEL
+    FROM ad_current
+    WHERE ADC_Type=#{adcType,jdbcType=INTEGER} AND
+      ADC_ADScheme_Index = #{adcAdschemeIndex,jdbcType=INTEGER} AND
+      ADC_OrgId=#{adcOrgid,jdbcType=VARCHAR} AND
+      ADC_ADScheme_ID=#{adcAdschemeId,jdbcType=VARCHAR}
+     ORDER BY ADC_Index -->
+  	<!-- FROM (SELECT * FROM ad_current WHERE ADC_Type=#{type,jdbcType=INTEGER}) a
+	WHERE FIND_IN_SET(a.ADC_OrgId,getParentOrgs(#{groupid,jdbcType=VARCHAR})) AND a.ADC_ADScheme_ID=#{adscAdsId,jdbcType=VARCHAR} -->
+  </select>
+  
+  <select id="selectAdcListByGST" resultMap="BaseResultMap" parameterType="com.adplatform.model.AdCurrent" >
+  	SELECT 
+      <include refid="Base_Column_List" />
+  	FROM ad_current
+  	WHERE ADC_Type = #{adcType,jdbcType=INTEGER} AND ADC_ADScheme_ID = #{adcAdschemeId,jdbcType=VARCHAR} AND ADC_OrgId = #{adcOrgid,jdbcType=VARCHAR}
+  	  AND ADC_ADScheme_Index = #{adcAdschemeIndex,jdbcType=INTEGER}
+  	 ORDER BY ADC_Index
+  </select>
+  
+  <select id="selectAdcByGSTI" resultMap="BaseResultMap" parameterType="com.adplatform.model.AdCurrent" >
+  	SELECT
+  	  <include refid="Base_Column_List" />
+  	FROM ad_current
+	WHERE ADC_OrgId=#{adcOrgid,jdbcType=VARCHAR} AND ADC_ADScheme_ID=#{adcAdschemeId,jdbcType=VARCHAR} 
+	  AND ADC_Type=#{adcType,jdbcType=INTEGER} AND ADC_Index = #{adcIndex,jdbcType=INTEGER}
+	  AND ADC_ADScheme_Index = #{adcAdschemeIndex,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 把所有该组织下的子组织图片地址清空 -->
+  <update id="updateVideoCurrent" parameterType="com.adplatform.model.AdTemp" >
+  	update ad_current set ADC_ADSF_ID = null,
+  	ADC_HotUrl=""
+  	where ADC_OrgId=#{adtOrgid,jdbcType=VARCHAR} AND ADC_ADScheme_ID=#{adtAdschemeId,jdbcType=VARCHAR} 
+	  AND ADC_Type=#{adtType,jdbcType=INTEGER} AND ADC_ADScheme_Index = #{adtAdschemeIndex,jdbcType=INTEGER}
+	  AND ADC_VideoFlag=0
+  </update>
+  <!-- 把所有该组织下的子组织图片地址清空 -->
+  <update id="updateVideoCurrentBoot" parameterType="com.adplatform.model.AdTemp" >
+  	update ad_current set ADC_ADSF_ID = null,
+  	ADC_HotUrl=""
+  	where ADC_OrgId=#{adtOrgid,jdbcType=VARCHAR} AND ADC_ADScheme_ID=#{adtAdschemeId,jdbcType=VARCHAR} 
+	  AND ADC_Type=#{adtType,jdbcType=INTEGER} AND ADC_VideoFlag=0
+  </update>
+  
+  <select id="selectNewsAdcUpdateTime" resultType="java.util.Date" parameterType="com.adplatform.command.ADSchemeCommand" >
+  	select MAX(ADC_UpdateTime) from ad_current
+  	where ADC_ADScheme_ID=#{adSchemeId,jdbcType=VARCHAR}
+	  AND ADC_Type=#{adType,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 把所有该组织下的子组织视频地址清空 -->
+  <update id="updatePicCurrentBoot" parameterType="com.adplatform.model.AdTemp" >
+  	update ad_current set ADC_ADSF_ID = null, ADC_HotUrl="", ADC_VideoFlag=0
+  	where ADC_OrgId=#{adtOrgid,jdbcType=VARCHAR} AND ADC_ADScheme_ID=#{adtAdschemeId,jdbcType=VARCHAR} 
+	  AND ADC_Type=#{adtType,jdbcType=INTEGER} AND ADC_VideoFlag=1 AND ADC_Index=1
+  </update>
+  
+  <!-- 把所有该组织下的子组织视频地址清空 -->
+  <update id="updatePicCurrent" parameterType="com.adplatform.model.AdTemp" >
+  	update ad_current set ADC_ADSF_ID = null, ADC_HotUrl="", ADC_VideoFlag=0
+  	where ADC_OrgId=#{adtOrgid,jdbcType=VARCHAR} AND ADC_ADScheme_ID=#{adtAdschemeId,jdbcType=VARCHAR} 
+	  AND ADC_Type=#{adtType,jdbcType=INTEGER} AND ADC_ADScheme_Index = #{adtAdschemeIndex,jdbcType=INTEGER}
+	  AND ADC_VideoFlag=1 AND ADC_Index=1
+  </update>
+  
+  <!-- 根据广告方案id、组织机构id、广告类型、广告位删除现有广告 -->
+  <update id="updateAdCurrentBatchByGSTI" parameterType="com.adplatform.command.ADSchemeCommand" >
+  	update ad_current set 
+  	ADC_ADSF_ID = null, 
+  	ADC_HotUrl="", 
+  	ADC_VideoFlag=0
+  	where 
+  	<foreach collection="list" item="nos" open="(" separator="OR" close=")">
+	  ADC_ADScheme_ID=#{nos.adSchemeId,jdbcType=VARCHAR} 
+  	  AND FIND_IN_SET(ADC_OrgId, queryChildrenAreaInfo(#{nos.orgId,jdbcType=VARCHAR}))
+	  AND ADC_Type=#{nos.adType,jdbcType=INTEGER} 
+	  AND ADC_ADScheme_Index = #{nos.index,jdbcType=INTEGER}
+	</foreach>
+  </update>
+  
+  <!-- 更新开机广告第九和第十 -->
+  <update id="updateTheLasttwoIndex" parameterType="com.adplatform.command.ADSchemeCommand" >
+  	update ad_current set ADC_ADSF_ID = null, ADC_HotUrl=""
+  	where ADC_ADScheme_ID=#{adSchemeId,jdbcType=VARCHAR} 
+  	  AND FIND_IN_SET(ADC_OrgId, queryChildrenAreaInfo(#{orgId,jdbcType=VARCHAR}))
+	  AND ADC_Type=1
+	  AND ADC_ADScheme_Index = 2
+	  AND (ADC_Index = 4 OR ADC_Index = 5)
+  </update>
+</mapper>
