@@ -6,11 +6,10 @@
     <result column="Type" jdbcType="INTEGER" property="type" />
     <result column="LogContent" jdbcType="NVARCHAR" property="logcontent" />
     <result column="UserAccount" jdbcType="NVARCHAR" property="useraccount" />
-    <result column="IP" jdbcType="NVARCHAR" property="ip" />
     <result column="Time" jdbcType="TIMESTAMP" property="time" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, Type, LogContent, UserAccount, IP, Time
+    ID, Type, LogContent, UserAccount,  Time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,7 +26,7 @@
       UserAccount, IP, Time
       )
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{logcontent,jdbcType=NVARCHAR}, 
-      #{useraccount,jdbcType=NVARCHAR}, #{ip,jdbcType=NVARCHAR}, #{time,jdbcType=TIMESTAMP}
+      #{useraccount,jdbcType=NVARCHAR},  #{time,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.work.wcs.model.SystemLog">
@@ -44,9 +43,6 @@
       </if>
       <if test="useraccount != null">
         UserAccount,
-      </if>
-      <if test="ip != null">
-        IP,
       </if>
       <if test="time != null">
         Time,
@@ -65,9 +61,6 @@
       <if test="useraccount != null">
         #{useraccount,jdbcType=NVARCHAR},
       </if>
-      <if test="ip != null">
-        #{ip,jdbcType=NVARCHAR},
-      </if>
       <if test="time != null">
         #{time,jdbcType=TIMESTAMP},
       </if>
@@ -85,9 +78,6 @@
       <if test="useraccount != null">
         UserAccount = #{useraccount,jdbcType=NVARCHAR},
       </if>
-      <if test="ip != null">
-        IP = #{ip,jdbcType=NVARCHAR},
-      </if>
       <if test="time != null">
         Time = #{time,jdbcType=TIMESTAMP},
       </if>
@@ -99,7 +89,6 @@
     set Type = #{type,jdbcType=INTEGER},
       LogContent = #{logcontent,jdbcType=NVARCHAR},
       UserAccount = #{useraccount,jdbcType=NVARCHAR},
-      IP = #{ip,jdbcType=NVARCHAR},
       Time = #{time,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=INTEGER}
   </update>

@@ -11,8 +11,6 @@ public class SystemLog {
 
     private String useraccount;
 
-    private String ip;
-
     private String time;
 
     public Integer getId() {
@@ -45,14 +43,6 @@ public class SystemLog {
 
     public void setUseraccount(String useraccount) {
         this.useraccount = useraccount == null ? null : useraccount.trim();
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip == null ? null : ip.trim();
     }
 
     public String getTime() {
