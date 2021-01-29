@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.wcs.mapper.SystemLogMapper">
+  <resultMap id="BaseResultMap" type="com.work.wcs.model.SystemLog">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Type" jdbcType="INTEGER" property="type" />
+    <result column="LogContent" jdbcType="NVARCHAR" property="logcontent" />
+    <result column="UserAccount" jdbcType="NVARCHAR" property="useraccount" />
+    <result column="IP" jdbcType="NVARCHAR" property="ip" />
+    <result column="Time" jdbcType="TIMESTAMP" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Type, LogContent, UserAccount, IP, Time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SystemLog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from SystemLog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.work.wcs.model.SystemLog">
+    insert into SystemLog (ID, Type, LogContent, 
+      UserAccount, IP, Time
+      )
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{logcontent,jdbcType=NVARCHAR}, 
+      #{useraccount,jdbcType=NVARCHAR}, #{ip,jdbcType=NVARCHAR}, #{time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.work.wcs.model.SystemLog">
+    insert into SystemLog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="type != null">
+        Type,
+      </if>
+      <if test="logcontent != null">
+        LogContent,
+      </if>
+      <if test="useraccount != null">
+        UserAccount,
+      </if>
+      <if test="ip != null">
+        IP,
+      </if>
+      <if test="time != null">
+        Time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="logcontent != null">
+        #{logcontent,jdbcType=NVARCHAR},
+      </if>
+      <if test="useraccount != null">
+        #{useraccount,jdbcType=NVARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=NVARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.work.wcs.model.SystemLog">
+    update SystemLog
+    <set>
+      <if test="type != null">
+        Type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="logcontent != null">
+        LogContent = #{logcontent,jdbcType=NVARCHAR},
+      </if>
+      <if test="useraccount != null">
+        UserAccount = #{useraccount,jdbcType=NVARCHAR},
+      </if>
+      <if test="ip != null">
+        IP = #{ip,jdbcType=NVARCHAR},
+      </if>
+      <if test="time != null">
+        Time = #{time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.work.wcs.model.SystemLog">
+    update SystemLog
+    set Type = #{type,jdbcType=INTEGER},
+      LogContent = #{logcontent,jdbcType=NVARCHAR},
+      UserAccount = #{useraccount,jdbcType=NVARCHAR},
+      IP = #{ip,jdbcType=NVARCHAR},
+      Time = #{time,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+<!--查询所有日志-->
+  <select id="selectAll"  resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM SystemLog
+  </select>
+</mapper>
